@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1D7E34CB30296CF7007E145C /* MathSymbols.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E34CA30296CF7007E145C /* MathSymbols.mlpackage */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
-		1D8CF10B3023DA5C003A7CE2 /* Simpli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simpli.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D7E34A530296CD6007E145C /* Simpli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simpli.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D7E34CA30296CF7007E145C /* MathSymbols.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = MathSymbols.mlpackage; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -29,6 +34,11 @@
 			path = Simpli;
 			sourceTree = "<group>";
 		};
+		1DD3C3C43024BDE800DADAAB /* CustomFont */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CustomFont;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,17 +55,11 @@
 		1D8CF1023023DA5C003A7CE2 = {
 			isa = PBXGroup;
 			children = (
+				1DD3C3C43024BDE800DADAAB /* CustomFont */,
 				1D8CF10D3023DA5C003A7CE2 /* Simpli */,
-				1D8CF10C3023DA5C003A7CE2 /* Products */,
+				1D7E34A530296CD6007E145C /* Simpli.app */,
+				1D7E34CA30296CF7007E145C /* MathSymbols.mlpackage */,
 			);
-			sourceTree = "<group>";
-		};
-		1D8CF10C3023DA5C003A7CE2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1D8CF10B3023DA5C003A7CE2 /* Simpli.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -75,12 +79,13 @@
 			);
 			fileSystemSynchronizedGroups = (
 				1D8CF10D3023DA5C003A7CE2 /* Simpli */,
+				1DD3C3C43024BDE800DADAAB /* CustomFont */,
 			);
 			name = Simpli;
 			packageProductDependencies = (
 			);
 			productName = Simpli;
-			productReference = 1D8CF10B3023DA5C003A7CE2 /* Simpli.app */;
+			productReference = 1D7E34A530296CD6007E145C /* Simpli.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -108,7 +113,7 @@
 			mainGroup = 1D8CF1023023DA5C003A7CE2;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 1D8CF10C3023DA5C003A7CE2 /* Products */;
+			productRefGroup = 1D8CF1023023DA5C003A7CE2;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -132,6 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D7E34CB30296CF7007E145C /* MathSymbols.mlpackage in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

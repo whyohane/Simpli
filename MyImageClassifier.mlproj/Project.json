@@ -1,0 +1,29 @@
+{
+  "activityEntities" : [
+    "projectCreated",
+    [
+      {
+        "createdDate" : "2026-08-07T14:03:36Z",
+        "event" : "projectCreated",
+        "id" : "B9BD0EDD-0A6D-4CFE-B72C-6C5CA03F9D94",
+        "subtitle" : "MyImageClassifier",
+        "title" : "Project Created"
+      }
+    ]
+  ],
+  "authorName" : "Yohane Cavalcante",
+  "createdDate" : "2026-08-07T14:03:36Z",
+  "description" : "",
+  "id" : "5002A5FB-1D20-44A8-9597-02BEEAF67E9D",
+  "license" : "",
+  "location" : "",
+  "modifiedDate" : "2026-08-07T14:03:36Z",
+  "projectName" : "MyImageClassifier",
+  "settingsEntity" : {
+    "snapshotOnExtendTraining" : true,
+    "snapshotOnResumeTraining" : false
+  },
+  "taskType" : "imageClassifier",
+  "title" : "Image Classification",
+  "version" : "1.1"
+}
