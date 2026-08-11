@@ -14,35 +14,40 @@ struct ContentView: View {
     
     var body: some View {
         
-        NavigationStack {
+        ZStack {
+            Color(.secondarySystemBackground)
+                .ignoresSafeArea()
             
-            VStack {
+            NavigationStack {
                 
-                Text("Welcome to\nSimpli")
-                    .font(.custom("ElmsSans-Bold", size: 50))
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.primary)
-                
-                Spacer()
-                
-                CebrusView()
-                
-                Text("Let's solve some math expressions\n and have fun together!")
-                    .multilineTextAlignment(.center)
-                    .font(.custom("ElmsSans-SemiBold", size: 16))
-                    .foregroundStyle(.primary)
-                Spacer()
-                Button ("Try now") {
+                VStack {
                     
-                    shouldShowDrawView = true
+                    Text("Welcome to\nSimpli")
+                        .font(.custom("ElmsSans-Bold", size: 50))
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.primary)
+                    
+                    Spacer()
+                    
+                    CebrusView()
+                    
+                    Text("Let's solve some math expressions\n and have fun together!")
+                        .multilineTextAlignment(.center)
+                        .font(.custom("ElmsSans-SemiBold", size: 16))
+                        .foregroundStyle(.primary)
+                    Spacer()
+                    Button ("Try now") {
+                        
+                        shouldShowDrawView = true
+                        
+                    }
+                    .buttonStyle(GameButtonStyle())
                     
                 }
-                .buttonStyle(GameButtonStyle())
-                
-            }
-            .padding()
-            .navigationDestination(isPresented: $shouldShowDrawView) {
-                DrawExpressionView()
+                .padding()
+                .navigationDestination(isPresented: $shouldShowDrawView) {
+                    DrawExpressionView()
+                }
             }
         }
     }
