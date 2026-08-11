@@ -10,29 +10,21 @@ import CoreML
 import PencilKit
 import UIKit
 
-/// Wraps the `MathSymbols` Core ML model, which classifies a single hand-drawn
-/// symbol (digits 0-9 and the operators `+` and `-`) from a 28x28 grayscale
-/// image. The `MathSymbols` class is generated automatically by Xcode from
-/// `MathSymbols.mlpackage`.
 final class MathSymbolsClassifier {
 
-    /// The prediction returned for a drawing.
     struct Prediction {
         let label: String
         let confidence: Double
-        /// The exact 28x28 image that was fed to the model, for debugging.
         let inputImage: UIImage?
     }
 
     private let model: MathSymbols
 
-    /// Loads the model. Throws if the compiled model can't be initialized.
+
     init() throws {
         model = try MathSymbols(configuration: MLModelConfiguration())
     }
 
-    /// Classifies the symbol drawn on the canvas. Returns `nil` when the canvas
-    /// is empty.
     func classify(_ drawing: PKDrawing) throws -> Prediction? {
         guard let pixelBuffer = Self.makePixelBuffer(from: drawing) else { return nil }
         let output = try model.prediction(input_1: pixelBuffer)
