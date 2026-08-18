@@ -30,10 +30,51 @@ final class MathSymbolsClassifier {
         let output = try model.prediction(input_1: pixelBuffer)
         let confidence = output.classLabel_probs[output.classLabel] ?? 0
         return Prediction(
-            label: output.classLabel,
+            label: Self.symbol(for: output.classLabel),
             confidence: confidence,
             inputImage: Self.image(from: pixelBuffer)
         )
+    }
+
+    private static func symbol(for classLabel: String) -> String {
+        switch classLabel {
+        case "plus": return "+"
+        case "minus": return "-"
+        default: return classLabel
+        }
+    }
+
+    func classifyExpression(_ drawing: PKDrawing) throws -> [Prediction] {
+        try Self.segment(drawing).compactMap { try classify($0) }
+    }
+
+    private static func segment(_ drawing: PKDrawing) -> [PKDrawing] {
+        let strokes = drawing.strokes
+        guard !strokes.isEmpty else { return [] }
+
+        // Characters are roughly as wide as the writing is tall; a gap smaller
+        // than this fraction of the height is treated as part of one character.
+        let gapThreshold = drawing.bounds.height * 0.10
+
+        let sorted = strokes.sorted { $0.renderBounds.minX < $1.renderBounds.minX }
+        var groups: [[PKStroke]] = []
+        var current: [PKStroke] = []
+        var currentMaxX = -CGFloat.infinity
+
+        for stroke in sorted {
+            let bounds = stroke.renderBounds
+            if current.isEmpty || bounds.minX <= currentMaxX + gapThreshold {
+                current.append(stroke)
+                currentMaxX = max(currentMaxX, bounds.maxX)
+            } else {
+                groups.append(current)
+                current = [stroke]
+                currentMaxX = bounds.maxX
+            }
+        }
+        if !current.isEmpty { groups.append(current) }
+
+        return groups.map { PKDrawing(strokes: $0) }
     }
 
     private static func image(from buffer: CVPixelBuffer) -> UIImage? {

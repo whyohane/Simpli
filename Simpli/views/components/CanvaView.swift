@@ -50,7 +50,6 @@ struct CanvaView: UIViewRepresentable {
         Coordinator(self)
     }
 
-    /// Propagates the user's strokes back to the bound drawing.
     class Coordinator: NSObject, PKCanvasViewDelegate {
         private let parent: CanvaView
 
