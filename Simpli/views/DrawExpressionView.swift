@@ -7,18 +7,14 @@
 
 import SwiftUI
 import PencilKit
-import SwiftData
 
 struct DrawExpressionView: View {
     
     @Environment(\.dismiss) private var dismiss
-    
+
     @State private var drawing = PKDrawing()
-    @State private var result: String = ""
-    @State private var debugImages: [UIImage] = []
-    
-    private let classifier = try? MathSymbolsClassifier()
-    
+    @State private var viewModel = DrawExpressionViewModel()
+
     var body: some View {
         ZStack {
             Color(.secondarySystemBackground)
@@ -42,29 +38,28 @@ struct DrawExpressionView: View {
                 HStack {
                     Button("Clear") {
                         drawing = PKDrawing()
-                        result = ""
-                        debugImages = []
+                        viewModel.clear()
                     }
                     .buttonStyle(GameButtonStyle())
-                    
+
                     Button("Calculate") {
-                        recognize()
+                        viewModel.recognize(drawing)
                     }
                     .buttonStyle(GameButtonStyle())
-                    
+
                 }
                 Spacer()
-                if !result.isEmpty {
-                    Text("Recognized Expression: \(result)")
+                if !viewModel.result.isEmpty {
+                    Text("Recognized Expression: \(viewModel.result)")
                         .font(.custom("ElmsSans-Bold", size: 18))
                         .foregroundColor(.primary)
                 }
                 
                 // Debug: shows the exact 28x28 image sent to the model for each
                 // segmented character, scaled up.
-                if !debugImages.isEmpty {
+                if !viewModel.debugImages.isEmpty {
                     HStack {
-                        ForEach(Array(debugImages.enumerated()), id: \.offset) { _, image in
+                        ForEach(Array(viewModel.debugImages.enumerated()), id: \.offset) { _, image in
                             Image(uiImage: image)
                                 .interpolation(.none)
                                 .resizable()
@@ -86,59 +81,6 @@ struct DrawExpressionView: View {
                 }
             }
         }
-    }
-    
-    private func recognize() {
-        guard let classifier else {
-            result = "Model unavailable"
-            return
-        }
-        do {
-            let predictions = try classifier.classifyExpression(drawing)
-            guard !predictions.isEmpty else {
-                result = "Draw something first"
-                debugImages = []
-                return
-            }
-            
-            let expression = predictions.map(\.label).joined()
-            if let value = Self.evaluate(expression) {
-                result = "\(expression) = \(value)"
-            } else {
-                result = expression
-            }
-            
-            // Show the normalized input of every recognized symbol for debugging.
-            debugImages = predictions.compactMap(\.inputImage)
-
-        } catch {
-            result = "Error"
-            debugImages = []
-        }
-    }
-    
-    private static func evaluate(_ expression: String) -> Int? {
-        var result = 0
-        var sign = 1
-        var currentNumber = ""
-        var hasNumber = false
-        
-        for character in expression {
-            if character.isNumber {
-                currentNumber.append(character)
-                hasNumber = true
-            } else if character == "+" || character == "-" {
-                guard let number = Int(currentNumber) else { return nil }
-                result += sign * number
-                currentNumber = ""
-                sign = character == "+" ? 1 : -1
-            } else {
-                return nil
-            }
-        }
-        
-        guard hasNumber, let number = Int(currentNumber) else { return nil }
-        return result + sign * number
     }
 }
 
